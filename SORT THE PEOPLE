@@ -1,0 +1,28 @@
+SORT THE PEOPLE
+
+
+You are given an array of strings names, and an array heights that consists of distinct positive integers. Both arrays are of length n.
+For each index i, names[i] and heights[i] denote the name and height of the ith person.
+Return names sorted in descending order by the people's heights.
+
+import java.util.*;
+
+class Solution {
+    public String[] sortPeople(String[] names, int[] heights) {
+        Integer[] index = new Integer[names.length];
+
+        for (int i = 0; i < names.length; i++) {
+            index[i] = i;
+        }
+
+        Arrays.sort(index, (a, b) -> heights[b] - heights[a]);
+
+        String[] result = new String[names.length];
+
+        for (int i = 0; i < names.length; i++) {
+            result[i] = names[index[i]];
+        }
+
+        return result;
+    }
+}
