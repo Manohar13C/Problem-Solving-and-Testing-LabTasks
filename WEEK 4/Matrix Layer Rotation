@@ -1,0 +1,48 @@
+Matrix Layer Rotation
+
+
+You are given a 2D matrix of dimension  and a positive integer . You have to rotate the matrix  times and print the resultant matrix. Rotation should be in anti-clockwise direction.
+
+
+
+import java.util.*;
+
+class Result {
+    public static void matrixRotation(List<List<Integer>> matrix, int r) {
+        int m = matrix.size();
+        int n = matrix.get(0).size();
+
+        int[][] a = new int[m][n];
+
+        for (int i = 0; i < m; i++)
+            for (int j = 0; j < n; j++)
+                a[i][j] = matrix.get(i).get(j);
+
+        for (int layer = 0; layer < Math.min(m, n) / 2; layer++) {
+            int top = layer, left = layer;
+            int bottom = m - 1 - layer, right = n - 1 - layer;
+
+            List<Integer> list = new ArrayList<>();
+
+            for (int j = left; j <= right; j++) list.add(a[top][j]);
+            for (int i = top + 1; i <= bottom; i++) list.add(a[i][right]);
+            for (int j = right - 1; j >= left; j--) list.add(a[bottom][j]);
+            for (int i = bottom - 1; i > top; i--) list.add(a[i][left]);
+
+            int len = list.size();
+            int shift = r % len;
+
+            int p = shift;
+            for (int j = left; j <= right; j++) a[top][j] = list.get(p++ % len);
+            for (int i = top + 1; i <= bottom; i++) a[i][right] = list.get(p++ % len);
+            for (int j = right - 1; j >= left; j--) a[bottom][j] = list.get(p++ % len);
+            for (int i = bottom - 1; i > top; i--) a[i][left] = list.get(p++ % len);
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++)
+                System.out.print(a[i][j] + " ");
+            System.out.println();
+        }
+    }
+}
