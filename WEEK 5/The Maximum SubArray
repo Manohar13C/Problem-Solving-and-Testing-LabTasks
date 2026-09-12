@@ -1,0 +1,33 @@
+The Maximum SubArray
+
+
+We define subsequence as any subset of an array. We define a subarray as a contiguous subsequence in an array.
+Given an array, find the maximum possible sum among:
+all nonempty subarrays.
+all nonempty subsequences.
+Print the two values as space-separated integers on one line.
+Note that empty subarrays/subsequences should not be considered.
+
+
+class Result {
+    public static List<Integer> maxSubarray(List<Integer> arr) {
+        int sum = arr.get(0);
+        int best = arr.get(0);
+        int positive = Math.max(0, arr.get(0));
+
+        for (int i = 1; i < arr.size(); i++) {
+            sum = Math.max(arr.get(i), sum + arr.get(i));
+            best = Math.max(best, sum);
+
+            positive += Math.max(0, arr.get(i));
+        }
+
+        if (positive == 0) {
+            positive = arr.get(0);
+            for (int x : arr)
+                positive = Math.max(positive, x);
+        }
+
+        return Arrays.asList(best, positive);
+    }
+}
